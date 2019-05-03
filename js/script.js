@@ -21,25 +21,24 @@ FSJS project 2 - List Filter and Pagination
 // VARIABLES
 // -------------------------------------
 
-const list = document.querySelectorAll("li.cf");
 const perPage = 10; // shows how many items per page
 
 
 
 /*** 
-   Create the `showPage` function to hide all of the items in the 
-   list except for the ten you want to show.
-
-   Pro Tips: 
-     - Keep in mind that with a list of 54 students, the last page 
-       will only display four.
-     - Remember that the first student has an index of 0.
-     - Remember that a function `parameter` goes in the parens when 
-       you initially define the function, and it acts as a variable 
-       or a placeholder to represent the actual function `argument` 
-       that will be passed into the parens later when you call or 
-       "invoke" the function 
-***/
+ Create the `showPage` function to hide all of the items in the 
+ list except for the ten you want to show.
+ 
+ Pro Tips: 
+ - Keep in mind that with a list of 54 students, the last page 
+ will only display four.
+ - Remember that the first student has an index of 0.
+ - Remember that a function `parameter` goes in the parens when 
+ you initially define the function, and it acts as a variable 
+ or a placeholder to represent the actual function `argument` 
+ that will be passed into the parens later when you call or 
+ "invoke" the function 
+ ***/
 
 // -------------------------------------
 // FUNCTIONS
@@ -49,30 +48,32 @@ const perPage = 10; // shows how many items per page
  * @param {*} list selects all li
  * @param {number} page number of the contact list 
  */
-function showPage(nameList, pageNum) {
+function showPage(pageNum) {
+   const list = document.querySelectorAll("li.cf");
    const start = (pageNum -1) * perPage; // shows how many items per page
    const end = pageNum * perPage; // shows how many items per page
-
-   for (let i = 0 ; i < nameList.length ; i++) {
+   
+   for (let i = 0 ; i < list.length ; i++) {
       if (i >= start && i < end) {
-         nameList[i].removeAttribute("style")
+         list[i].removeAttribute("style")
       } else {
-         nameList[i].style.display = "none"
+         list[i].style.display = "none"
       }
    }
 }
 
 /*** 
-   Create the `appendPageLinks function` to generate, append, and add 
-   functionality to the pagination buttons.
-***/
+ Create the `appendPageLinks function` to generate, append, and add 
+ functionality to the pagination buttons.
+ ***/
 
 /**
  * Appends a pagination list to the end of the div.page
  */
 function appendPageLinks() {
-   showPage(list, 1);
-
+   showPage(1);
+   
+   const list = document.querySelectorAll("li.cf");
    const totalPage = Math.ceil(list.length / perPage) // shows how many items per page
    
    let listHtml = "";
@@ -108,7 +109,7 @@ document.querySelector(".pagination").addEventListener("click", e => {
       e.target.classList.add("active");
 
       const page = parseInt(e.target.textContent);   
-      showPage(list, page);
+      showPage(page);
    }
 })
 
