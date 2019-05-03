@@ -45,7 +45,7 @@ const perPage = 10; // shows how many items per page
 // FUNCTIONS
 // -------------------------------------
 /**
- * 
+ * This function shows the extracted <li> depending on the page number
  * @param {*} list selects all li
  * @param {number} page number of the contact list 
  */
