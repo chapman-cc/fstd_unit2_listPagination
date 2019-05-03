@@ -22,7 +22,7 @@ FSJS project 2 - List Filter and Pagination
 // -------------------------------------
 
 const list = document.querySelectorAll("li.cf");
-const itmeCount = 10;
+const perPage = 10; // shows how many items per page
 
 
 
@@ -41,29 +41,76 @@ const itmeCount = 10;
        "invoke" the function 
 ***/
 
-function showPage(list, page) {
-   const start = (page -1) * itmeCount;
-   const end = page * itmeCount;
+// -------------------------------------
+// FUNCTIONS
+// -------------------------------------
+/**
+ * 
+ * @param {*} list selects all li
+ * @param {number} page number of the contact list 
+ */
+function showPage(nameList, pageNum) {
+   const start = (pageNum -1) * perPage; // shows how many items per page
+   const end = pageNum * perPage; // shows how many items per page
 
-   for (let i = 0 ; i < list.length ; i++) {
+   for (let i = 0 ; i < nameList.length ; i++) {
       if (i >= start && i < end) {
-         list[i].style.display = "block";
+         nameList[i].removeAttribute("style")
       } else {
-         list[i].style.display = "none";
+         nameList[i].style.display = "none"
       }
    }
 }
-
-showPage(list, 2)
-
 
 /*** 
    Create the `appendPageLinks function` to generate, append, and add 
    functionality to the pagination buttons.
 ***/
 
+/**
+ * Appends a pagination list to the end of the div.page
+ */
+function appendPageLinks() {
+   showPage(list, 1);
+
+   const totalPage = Math.ceil(list.length / perPage) // shows how many items per page
+   
+   let listHtml = "";
+   for (let i = 1 ; i < totalPage + 1 ; i++ ) {
+      listHtml += `<li><a href="#">${i}</a></li>`
+   }
+   
+   let html = 
+   `
+      <div class="pagination">
+         <ul>
+            ${listHtml}
+         </ul>
+      </div>
+   `
+   
+   document.querySelector("div.page").innerHTML += html;
+   document.querySelector(".pagination a").classList.add("active");
+   
+}
 
 
+// -------------------------------------
+// RUN
+// -------------------------------------
+
+
+appendPageLinks();
+
+document.querySelector(".pagination").addEventListener("click", e => {
+   if (e.target.tagName === "A") {
+      document.querySelector(".pagination .active").classList.remove("active");
+      e.target.classList.add("active");
+
+      const page = parseInt(e.target.textContent);   
+      showPage(list, page);
+   }
+})
 
 
 // Remember to delete the comments that came with this file, and replace them with your own code comments.
