@@ -17,6 +17,12 @@ FSJS project 2 - List Filter and Pagination
    scoped to that function.
 ***/
 
+// -------------------------------------
+// VARIABLES
+// -------------------------------------
+
+const list = document.querySelectorAll("li.cf");
+const itmeCount = 10;
 
 
 
@@ -35,7 +41,20 @@ FSJS project 2 - List Filter and Pagination
        "invoke" the function 
 ***/
 
+function showPage(list, page) {
+   const start = (page -1) * itmeCount;
+   const end = page * itmeCount;
 
+   for (let i = 0 ; i < list.length ; i++) {
+      if (i >= start && i < end) {
+         list[i].style.display = "block";
+      } else {
+         list[i].style.display = "none";
+      }
+   }
+}
+
+showPage(list, 2)
 
 
 /*** 
