@@ -2,7 +2,6 @@
 // VARIABLES
 // -------------------------------------
 
-const studentList = document.querySelector(".student-list")
 const list = document.querySelectorAll(".student-list > .cf");
 const perPage = 10; // shows how many items per page
 
@@ -13,12 +12,13 @@ const perPage = 10; // shows how many items per page
  * This function shows the extracted <li> depending on the page number
  * @param {number} page number to calculate the index start of list 
  */
-function showPage(pageNo) {
+function showPage(pageNo, list) {
    let i = (pageNo -1) * perPage; 
    let end = i + 10; 
    if (end > list.length) 
-      end = list.length;
-
+   end = list.length;
+   
+   const studentList = document.querySelector(".student-list");
    studentList.innerHTML="";
    for (; i < end ; i++) {
       studentList.appendChild(list [i])
@@ -28,10 +28,10 @@ function showPage(pageNo) {
 /**
  * Appends a pagination list to the end of the div.page
  */
-function appendPageLinks() {   
+function appendPageLinks(list) {   
    const totalPage = Math.ceil(list.length / perPage) // shows how many items per page
    
-   showPage(1);
+   showPage(1, list);
 
    let listHtml = "";
    for (let i = 1 ; i < totalPage + 1 ; i++ ) {
@@ -47,7 +47,7 @@ function appendPageLinks() {
    </div>
    `
    
-   document.querySelector("div.page").innerHTML += html;
+   document.querySelector(".page").innerHTML += html;
    document.querySelector(".pagination a").classList.add("active");
 }
 
@@ -60,7 +60,7 @@ function turnPage (e) {
       e.target.classList.add("active");
 
       const page = parseInt(e.target.textContent);   
-      showPage(page);
+      showPage(page, list);
    } else { 
       return
    }
@@ -80,35 +80,29 @@ function appendSearchBar () {
    document.querySelector(".page-header.cf").innerHTML += html;
 }
 
-// function searchList (e) {
+function searchList (e) {
    
-//    const input = this.firstElementChild.value.toLowerCase(); // or e.target.value
-//    list.forEach(li=> {
-//       const name = li.querySelector("h3").textContent;
-//       if (name.includes(input)){
-//          studentList.appendChild(li)
-//       }
+   const input = this.firstElementChild.value.toLowerCase(); // or e.target.value
+   const newList = [];
+   list.forEach(li=> {
+      const name = li.querySelector("h3").textContent;
+      if (name.includes(input)){
+         newList.push(li)
+      }
+   })
 
-      
-      
-//    })
-   
-   
-      
-   
-// }
+   appendPageLinks(newList)
+}
 // -------------------------------------
 // RUN
 // -------------------------------------
 
-
-// showPage(1);
-appendPageLinks();
+appendPageLinks(list);
 appendSearchBar();
 
 document.querySelector(".pagination").addEventListener("click", turnPage, false)
 
-// document.querySelector(".student-search").addEventListener("keyup", searchList, false)
+document.querySelector(".student-search").addEventListener("keyup", searchList, false)
 // document.querySelector(".student-search").addEventListener("click", searchList, false)
 
 
