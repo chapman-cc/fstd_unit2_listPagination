@@ -50,7 +50,7 @@ function appendPageLinks() {
    document.querySelector("div.page").innerHTML += html;
    document.querySelector(".pagination a").classList.add("active");
 }
-   
+
 /**
  * callback for turning pages in .pagination
  */
@@ -80,6 +80,23 @@ function appendSearchBar () {
    document.querySelector(".page-header.cf").innerHTML += html;
 }
 
+// function searchList (e) {
+   
+//    const input = this.firstElementChild.value.toLowerCase(); // or e.target.value
+//    list.forEach(li=> {
+//       const name = li.querySelector("h3").textContent;
+//       if (name.includes(input)){
+//          studentList.appendChild(li)
+//       }
+
+      
+      
+//    })
+   
+   
+      
+   
+// }
 // -------------------------------------
 // RUN
 // -------------------------------------
@@ -91,12 +108,8 @@ appendSearchBar();
 
 document.querySelector(".pagination").addEventListener("click", turnPage, false)
 
-      const page = parseInt(e.target.textContent);   
-      showPage(page);
-   } else { 
-      return
-   }
-})
+// document.querySelector(".student-search").addEventListener("keyup", searchList, false)
+// document.querySelector(".student-search").addEventListener("click", searchList, false)
 
 
 // Remember to delete the comments that came with this file, and replace them with your own code comments.
