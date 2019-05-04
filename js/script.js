@@ -108,7 +108,7 @@ document.querySelector(".pagination").addEventListener("click", e => {
       const page = parseInt(e.target.textContent);   
       showPage(page);
    } else { 
-      return 
+      return
    }
 })
 
