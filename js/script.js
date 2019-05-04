@@ -2,6 +2,7 @@
 // VARIABLES
 // -------------------------------------
 
+const studentList = document.querySelector(".student-list")
 const list = document.querySelectorAll(".student-list > .cf");
 const perPage = 10; // shows how many items per page
 
@@ -13,7 +14,6 @@ const perPage = 10; // shows how many items per page
  * @param {number} page number to calculate the index start of list 
  */
 function showPage(pageNo) {
-   const studentList = document.querySelector(".student-list")
    let i = (pageNo -1) * perPage; 
    let end = i + 10; 
    if (end > list.length) 
@@ -31,6 +31,8 @@ function showPage(pageNo) {
 function appendPageLinks() {   
    const totalPage = Math.ceil(list.length / perPage) // shows how many items per page
    
+   showPage(1);
+
    let listHtml = "";
    for (let i = 1 ; i < totalPage + 1 ; i++ ) {
       listHtml += `<li><a href="#">${i}</a></li>`;
@@ -47,6 +49,7 @@ function appendPageLinks() {
    
    document.querySelector("div.page").innerHTML += html;
    document.querySelector(".pagination a").classList.add("active");
+}
    
 /**
  * callback for turning pages in .pagination
@@ -64,7 +67,7 @@ function turnPage (e) {
 }
 
 /**
- * this adds search bar to page
+ * adds search bar to page
  */
 function appendSearchBar () {
    let html = 
@@ -82,7 +85,7 @@ function appendSearchBar () {
 // -------------------------------------
 
 
-showPage(1);
+// showPage(1);
 appendPageLinks();
 appendSearchBar();
 
