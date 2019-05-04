@@ -21,6 +21,7 @@ FSJS project 2 - List Filter and Pagination
 // VARIABLES
 // -------------------------------------
 
+const list = document.querySelectorAll(".student-list > .cf");
 const perPage = 10; // shows how many items per page
 
 
@@ -45,20 +46,18 @@ const perPage = 10; // shows how many items per page
 // -------------------------------------
 /**
  * This function shows the extracted <li> depending on the page number
- * @param {*} list selects all li
- * @param {number} page number of the contact list 
+ * @param {number} page number to calculate the index start of list 
  */
-function showPage(pageNum) {
-   const list = document.querySelectorAll("li.cf");
-   const start = (pageNum -1) * perPage; // shows how many items per page
-   const end = pageNum * perPage; // shows how many items per page
-   
-   for (let i = 0 ; i < list.length ; i++) {
-      if (i >= start && i < end) {
-         list[i].removeAttribute("style")
-      } else {
-         list[i].style.display = "none"
-      }
+function showPage(pageNo) {
+   const studentList = document.querySelector(".student-list")
+   let i = (pageNo -1) * perPage; 
+   let end = i + 10; 
+   if (end > list.length) 
+      end = list.length;
+
+   studentList.innerHTML="";
+   for (; i < end ; i++) {
+      studentList.appendChild(list [i])
    }
 }
 
@@ -70,24 +69,21 @@ function showPage(pageNum) {
 /**
  * Appends a pagination list to the end of the div.page
  */
-function appendPageLinks() {
-   showPage(1);
-   
-   const list = document.querySelectorAll("li.cf");
+function appendPageLinks() {   
    const totalPage = Math.ceil(list.length / perPage) // shows how many items per page
    
    let listHtml = "";
    for (let i = 1 ; i < totalPage + 1 ; i++ ) {
-      listHtml += `<li><a href="#">${i}</a></li>`
+      listHtml += `<li><a href="#">${i}</a></li>`;
    }
    
    let html = 
    `
-      <div class="pagination">
-         <ul>
-            ${listHtml}
-         </ul>
-      </div>
+   <div class="pagination">
+   <ul>
+   ${listHtml}
+   </ul>
+   </div>
    `
    
    document.querySelector("div.page").innerHTML += html;
@@ -101,6 +97,7 @@ function appendPageLinks() {
 // -------------------------------------
 
 
+showPage(1);
 appendPageLinks();
 
 document.querySelector(".pagination").addEventListener("click", e => {
@@ -110,6 +107,8 @@ document.querySelector(".pagination").addEventListener("click", e => {
 
       const page = parseInt(e.target.textContent);   
       showPage(page);
+   } else { 
+      return 
    }
 })
 
