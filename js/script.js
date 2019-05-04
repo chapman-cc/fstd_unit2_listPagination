@@ -91,6 +91,19 @@ function appendPageLinks() {
    
 }
 
+/**
+ * this adds search bar to page
+ */
+function appendSearchBar () {
+   let html = 
+      `        
+      <div class="student-search">
+      <input placeholder="Search for students...">
+      <button>Search</button>
+      </div>
+      `
+   document.querySelector(".page-header.cf").innerHTML += html;
+}
 
 // -------------------------------------
 // RUN
@@ -99,6 +112,7 @@ function appendPageLinks() {
 
 showPage(1);
 appendPageLinks();
+appendSearchBar();
 
 document.querySelector(".pagination").addEventListener("click", e => {
    if (e.target.tagName === "A") {
