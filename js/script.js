@@ -48,6 +48,19 @@ function appendPageLinks() {
    document.querySelector("div.page").innerHTML += html;
    document.querySelector(".pagination a").classList.add("active");
    
+/**
+ * callback for turning pages in .pagination
+ */
+function turnPage (e) {
+   if (e.target.tagName === "A") {
+      e.target.parentElement.parentElement.querySelector(".active").classList.remove("active");
+      e.target.classList.add("active");
+
+      const page = parseInt(e.target.textContent);   
+      showPage(page);
+   } else { 
+      return
+   }
 }
 
 /**
@@ -73,10 +86,7 @@ showPage(1);
 appendPageLinks();
 appendSearchBar();
 
-document.querySelector(".pagination").addEventListener("click", e => {
-   if (e.target.tagName === "A") {
-      e.target.parentElement.parentElement.querySelector(".active").classList.remove("active");
-      e.target.classList.add("active");
+document.querySelector(".pagination").addEventListener("click", turnPage, false)
 
       const page = parseInt(e.target.textContent);   
       showPage(page);
