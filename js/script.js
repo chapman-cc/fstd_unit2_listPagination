@@ -116,7 +116,7 @@ appendSearchBar();
 
 document.querySelector(".pagination").addEventListener("click", e => {
    if (e.target.tagName === "A") {
-      document.querySelector(".pagination .active").classList.remove("active");
+      e.target.parentElement.parentElement.querySelector(".active").classList.remove("active");
       e.target.classList.add("active");
 
       const page = parseInt(e.target.textContent);   
