@@ -135,11 +135,11 @@ function searchList (e) {
          appendPageLinks(studentListCurrent)
 
       } else {
-         alert("No results")
+         document.querySelector(".student-list").innerHTML = "<p>These arent the droids you're looking for...</p>"
       }
 
    } else {
-      return ;
+      return
    }
 }
 // -------------------------------------
