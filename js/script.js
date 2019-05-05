@@ -1,11 +1,10 @@
 // -------------------------------------
 // VARIABLES
 // -------------------------------------
-// const testList = document.getElementsByClassName("student-item cf");
-// const list = document.querySelectorAll(".student-list > .cf");
+
+const perPage = 10; // shows how many items per page
 const studentList = [];
 let studentListCurrent = [];
-const perPage = 10; // shows how many items per page
 
 // -------------------------------------
 // CLASS
@@ -36,26 +35,29 @@ function Student (item) {
 // -------------------------------------
 // FUNCTIONS
 // -------------------------------------
-
+/**
+ * store a copy of students info in array of objects studentList, and copy to studentListCurrent
+ */
 function getStudentList() {
    const list = document.querySelectorAll(".student-item.cf");
    for (let li of list ) {
       const student = new Student(li);
       studentList.push(student);
-      studentListCurrent.push(student);
    }
+   studentListCurrent = studentList;
 }
 
 /**
  * This function shows the extracted <li> depending on the page number
  * @param {number} page number to calculate the index start of list 
+ * @param {array} list of students for iteration 
  */
-
 function showPage(pageNo, list) {
    let i = (pageNo - 1) * perPage;
    let end = i + 10;
    if (end > list.length) 
       end = list.length;
+
    const ul = document.querySelector(".student-list");
    ul.innerHTML = "";
 
@@ -64,6 +66,9 @@ function showPage(pageNo, list) {
    }
 }
 
+/**
+ * append "div.pagination > ul" at the end 
+ */
 function appendPagination () {
    const ul = document.createElement("ul");
    const div = document.createElement("div");
@@ -71,8 +76,23 @@ function appendPagination () {
    div.appendChild(ul);
    document.querySelector(".page").appendChild(div);   
 }
+
 /**
- * Appends a pagination list depend on the total number of list.length 
+ * adds search bar to page
+ */
+function appendSearchBar() {
+   let html =
+   `        
+   <div class="student-search">
+   <input placeholder="Search for students...">
+   <button>Search</button>
+   </div>
+   `
+   document.querySelector(".page-header.cf").innerHTML += html;
+}
+
+/**
+ * @param {array} provide array to generate list for pagination 
  */
 function appendPageLinks(list) {
    const totalPage = Math.ceil(list.length / perPage);
@@ -101,28 +121,15 @@ function turnPage(e) {
    }
 }
 
-/**
- * adds search bar to page
- */
-function appendSearchBar() {
-   let html =
-   `        
-   <div class="student-search">
-   <input placeholder="Search for students...">
-   <button>Search</button>
-   </div>
-   `
-   document.querySelector(".page-header.cf").innerHTML += html;
-}
-
 function searchList (e) {
    if ((e.target.tagName === "BUTTON" && e.type === "click") || (e.target.tagName === "INPUT" && e.type === "keyup")) {
-      const input = document.querySelector(".student-search > input").value.toLowerCase();
+
+      const input = this.firstElementChild.value.toLowerCase();
       const searchList = studentList.filter(student => student.name.includes(input)); 
 
       if (searchList.length) {
          studentListCurrent = searchList;
-         showPage(1, searchList);
+         showPage(1, studentListCurrent);
          const pagination = document.querySelector(".pagination > ul");
          pagination.innerHTML = "";
          appendPageLinks(studentListCurrent)
@@ -146,6 +153,5 @@ appendPageLinks(studentList);
 appendSearchBar();
 
 document.querySelector(".pagination").addEventListener("click", turnPage, false)
-
 document.querySelector(".student-search").addEventListener("keyup", searchList, false)
 document.querySelector(".student-search").addEventListener("click", searchList, false)
