@@ -120,7 +120,9 @@ function turnPage(e) {
       return // end functino if clicked target is not <a>
    }
 }
-
+/**
+ * callback for searching, 
+ */
 function searchList (e) {
    if ((e.target.tagName === "BUTTON" && e.type === "click") || (e.target.tagName === "INPUT" && e.type === "keyup")) {
 
