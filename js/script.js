@@ -1,7 +1,7 @@
 // -------------------------------------
 // VARIABLES
 // -------------------------------------
-
+const studentListUl = document.querySelector(".student-list");
 const perPage = 10; // shows how many items per page
 const studentList = [];
 let studentListCurrent = [];
@@ -58,7 +58,7 @@ function showPage(pageNo, list) {
    if (end > list.length) 
       end = list.length;
 
-   const ul = document.querySelector(".student-list");
+   const ul = studentListUl;
    ul.innerHTML = "";
 
    for ( ; i < end ; i ++){
@@ -74,7 +74,7 @@ function appendPagination () {
    const div = document.createElement("div");
    div.className = "pagination";
    div.appendChild(ul);
-   document.querySelector(".page").appendChild(div);   
+   studentListUl.parentElement.appendChild(div);   
 }
 
 /**
@@ -135,7 +135,7 @@ function searchList (e) {
          appendPageLinks(studentListCurrent)
 
       } else {
-         document.querySelector(".student-list").innerHTML = "<p>These arent the droids you're looking for...</p>"
+         studentListUl.innerHTML = "<p>These arent the droids you're looking for...</p>"
       }
 
    } else {
