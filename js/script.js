@@ -44,7 +44,7 @@ function getStudentList() {
       const student = new Student(li);
       studentList.push(student);
    }
-   studentListCurrent = studentList;
+   studentListCurrent = studentList.slice();
 }
 
 /**
@@ -140,9 +140,8 @@ function searchList (e) {
          studentListUl.innerHTML = "<p>These arent the droids you're looking for...</p>"
       }
 
-   } else {
+   } else 
       return
-   }
 }
 // -------------------------------------
 // RUN
